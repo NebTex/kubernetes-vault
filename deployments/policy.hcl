@@ -1,8 +1,4 @@
-path "intermediate-ca/issue/kubernetes-vault" {
-  capabilities = ["update"]
-}
-
-path "auth/approle/role/sample-app/secret-id" {
+path "auth/approle/role/*" {
   capabilities = ["update"]
 }
 

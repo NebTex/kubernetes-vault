@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kubernetes-vault
+  namespace: vault
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: kubernetes-vault
+    spec:
+      containers:
+      - name: kubernetes-vault
+        image: boostport/kubernetes-vault:0.2.0
+        env:
+        - name: VAULT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: kubernetes-vault
+              key: token
+        - name: VAULT_ADDR
+          value: http://vault:8200
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: KUBERNETES_SERVICE
+          value: kubernetes-vault
